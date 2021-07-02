@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
         // write your code here
-        DynamicArray da = new DynamicArray();
+        DynamicArray da = new DynamicArray<String>();
         System.out.println("Is empty: " + da.isEmpty());
         da.add("3");
         da.add("4");
