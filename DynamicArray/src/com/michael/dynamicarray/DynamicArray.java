@@ -20,12 +20,7 @@ public class DynamicArray {
             return;
         }
         if (size >= capacity){
-            capacity *= 2;
-            int[] newIntArray = new int[capacity];
-            for (int i = 0; i < size; i++) {
-                newIntArray[i] = intArray[i];
-            }
-            intArray = newIntArray;
+            resize();
         }
         intArray[size] = data;
         size++;
@@ -40,12 +35,7 @@ public class DynamicArray {
             return;
         }
         if (size >= capacity){
-            capacity *= 2;
-            int[] newIntArray = new int[capacity];
-            for (int i = 0; i < size; i++) {
-                newIntArray[i] = intArray[i];
-            }
-            intArray = newIntArray;
+            resize();
         }
         for (int i = size; i > index; i--) {
             intArray[i] = intArray[i - 1];
@@ -81,6 +71,34 @@ public class DynamicArray {
             intArray = newIntArray;
         }
 
+    }
+    public void set(int index, int data) {
+        intArray[index] = data;
+    }
+    public boolean isEmpty() {
+        if (size == 0) {
+            return true;
+        }
+        return false;
+    }
+    public int size() {
+        return size;
+    }
+    public boolean contains(int data) {
+        for (int i : intArray) {
+            if (i == data) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private void resize() {
+        capacity *= 2;
+        int[] newIntArray = new int[capacity];
+        for (int i = 0; i < size; i++) {
+            newIntArray[i] = intArray[i];
+        }
+        intArray = newIntArray;
     }
     @Override
     public String toString() {
