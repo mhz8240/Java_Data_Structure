@@ -3,7 +3,7 @@ package com.michael.dynamicarray;
 import java.util.Arrays;
 
 public class DynamicArray {
-    private int[] intArray = null;
+    private String[] strArray = null;
     private int capacity;
     private int size;
     private static final int minCapacity = 4;
@@ -12,9 +12,9 @@ public class DynamicArray {
     public DynamicArray() {
         this.capacity = 4;
         this.size = 0;
-        this.intArray = new int[capacity];
+        this.strArray = new String[capacity];
     }
-    public void add(int data) {
+    public void add(String data) {
         if (size >= maxCapacity) {
             System.out.println("Out of capacity");
             return;
@@ -22,10 +22,10 @@ public class DynamicArray {
         if (size >= capacity){
             resize();
         }
-        intArray[size] = data;
+        strArray[size] = data;
         size++;
     }
-    public void insert(int index, int data) {
+    public void insert(int index, String data) {
         if (size >= maxCapacity) {
             System.out.println("Out of capacity");
             return;
@@ -38,14 +38,14 @@ public class DynamicArray {
             resize();
         }
         for (int i = size; i > index; i--) {
-            intArray[i] = intArray[i - 1];
+            strArray[i] = strArray[i - 1];
         }
-        intArray[index] = data;
+        strArray[index] = data;
         size++;
     }
 
-    public int get(int index) {
-        return intArray[index];
+    public String get(int index) {
+        return strArray[index];
     }
 
     public void remove(int index) {
@@ -58,22 +58,22 @@ public class DynamicArray {
             return;
         }
         for (int i = index; i < size - 1; i++) {
-            intArray[i] = intArray[i + 1];
+            strArray[i] = strArray[i + 1];
         }
-        intArray[size - 1] = 0;
+        strArray[size - 1] = null;
         size--;
         if (size <= capacity / 4) {
             capacity /= 2;
-            int[] newIntArray = new int[capacity];
+            String[] newIntArray = new String[capacity];
             for (int i = 0; i < size; i++) {
-                newIntArray[i] = intArray[i];
+                newIntArray[i] = strArray[i];
             }
-            intArray = newIntArray;
+            strArray = newIntArray;
         }
 
     }
-    public void set(int index, int data) {
-        intArray[index] = data;
+    public void set(int index, String data) {
+        strArray[index] = data;
     }
     public boolean isEmpty() {
         if (size == 0) {
@@ -84,8 +84,8 @@ public class DynamicArray {
     public int size() {
         return size;
     }
-    public boolean contains(int data) {
-        for (int i : intArray) {
+    public boolean contains(String data) {
+        for (String i : strArray) {
             if (i == data) {
                 return true;
             }
@@ -94,16 +94,16 @@ public class DynamicArray {
     }
     private void resize() {
         capacity *= 2;
-        int[] newIntArray = new int[capacity];
+        String[] newIntArray = new String[capacity];
         for (int i = 0; i < size; i++) {
-            newIntArray[i] = intArray[i];
+            newIntArray[i] = strArray[i];
         }
-        intArray = newIntArray;
+        strArray = newIntArray;
     }
     @Override
     public String toString() {
         return "DynamicArray{" +
-                "intArray=" + Arrays.toString(intArray) +
+                "intArray=" + Arrays.toString(strArray) +
                 ", capacity=" + capacity +
                 ", size=" + size +
                 '}';
