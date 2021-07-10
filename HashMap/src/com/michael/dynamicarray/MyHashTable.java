@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class MyHashTable {
     private Data[] data;
-    private int bucketSize = 4;
+    private int bucketSize = 8;
     private int size = 0;
 
     public MyHashTable() {
@@ -38,23 +38,18 @@ public class MyHashTable {
     public void put(String key, String value) {
         int index = getIndex(key);
         int hashCode = getHashCode(key);
-        if (data[index] == null) {
-            data[index] = new Data(key, value, hashCode);
-            size++;
-            if (getLoadFactor() >= 0.7) {
-                resize();
-            }
-            return;
-        }
+
         Data currentData = data[index];
-        while (currentData.next != null) {
-            if (key.equals(data[index].key) && hashCode == data[index].hashCode) {
+        while (currentData != null) {
+            if (key.equals(currentData.key) && hashCode == currentData.hashCode) {
                 currentData.value = value;
                 return;
             }
             currentData = currentData.next;
         }
-        currentData.next = new Data(key, value, hashCode);
+        currentData = new Data(key, value, hashCode);
+        currentData.next = data[index];
+        data[index] = currentData;
         size++;
         if (getLoadFactor() >= 0.7) {
             resize();
@@ -79,6 +74,10 @@ public class MyHashTable {
     }
 
     private int getIndex(String key) {
+        // test collision
+        if (key.equals("John") || key.equals("Jane")) {
+            return 2;
+        }
         return getHashCode(key) % bucketSize;
     }
 
@@ -101,27 +100,24 @@ public class MyHashTable {
         return null;
     }
 
-    public void remove(String key) {
+    public Data remove(String key) {
         int index = getIndex(key);
-        if (data[index] == null) {
-            System.out.println("Can't find the given key");
-            return;
-        }
-        if (data[index].key.equals(key)) {
+        Data currentData = data[index];
+        if (currentData != null && currentData.key.equals(key)) {
             data[index] = data[index].next;
             size--;
-            return;
+            return currentData;
         }
-        Data currentData = data[index];
         while (currentData.next != null) {
             if (currentData.next.key.equals(key)) {
+                Data temp = currentData.next;
                 currentData.next = currentData.next.next;
                 size--;
-                return;
+                return temp;
             }
         }
         System.out.println("Can't find the given key");
-        return;
+        return null;
     }
 
     public int getSize() {
