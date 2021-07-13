@@ -19,10 +19,10 @@ public class BinarySearchTree {
             return getMin(node.left);
         }
         public Node getMax(Node node) {
-            if (right == null) {
+            if (node.right == null) {
                 return node;
             }
-            return getMin(right);
+            return getMax(node.right);
         }
 
         @Override
@@ -35,6 +35,7 @@ public class BinarySearchTree {
     }
 
     Node root = null;
+
     public void add(int key, int value) {
         root = add(key, value, root);
     }
@@ -103,6 +104,9 @@ public class BinarySearchTree {
     }
 
     public void inOrderTraversal(Node node) {
+        if (node == null) {
+            return;
+        }
         if (node.left != null) {
             inOrderTraversal(node.left);
         }
@@ -111,4 +115,38 @@ public class BinarySearchTree {
             inOrderTraversal(node.right);
         }
     }
+
+
+    public int size () {
+        return size(root);
+    }
+    private int size(Node node) {
+        if (node == null) {
+            return 0;
+        }
+        return size(node.left) + size(node.right) + 1;
+    }
+
+    public boolean isEmpty() {
+        if (size(root) == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public Node getMin() {
+        if (root == null) {
+            return root;
+        }
+        return root.getMin(root);
+    }
+    public Node getMax() {
+        if (root == null) {
+            return root;
+        }
+        return root.getMax(root);
+    }
+
+
+
 }
